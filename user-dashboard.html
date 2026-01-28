@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - LaundryPro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/user-dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <i class="fas fa-tshirt"></i>
+                    <span>LaundryPro</span>
+                </div>
+                <p>Customer Portal</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active" data-page="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </li>
+                    <li class="nav-item" data-page="new-order">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>New Order</span>
+                    </li>
+                    <li class="nav-item" data-page="my-orders">
+                        <i class="fas fa-list-alt"></i>
+                        <span>My Orders</span>
+                    </li>
+                    <li class="nav-item" data-page="order-history">
+                        <i class="fas fa-history"></i>
+                        <span>Order History</span>
+                    </li>
+                    <li class="nav-item" data-page="profile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </li>
+                    <li class="nav-item" data-page="support">
+                        <i class="fas fa-headset"></i>
+                        <span>Support</span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="page-title">User Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notification-count">0</span>
+                    </div>
+                    <div class="user-menu">
+                        <img src="assets/41.png" alt="User Avatar" class="avatar">
+                        <div class="user-info">
+                            <span class="user-name" id="user-name">Customer</span>
+                            <span class="user-role">Customer</span>
+                        </div>
+                        <div class="dropdown">
+                            <button class="dropdown-toggle">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="#" data-page="profile">Profile</a>
+                                <a href="#" id="logout-btn">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <section id="dashboard-page" class="page active">
+                    <div class="welcome-section">
+                        <h2>Welcome, <span id="welcome-name">Customer</span>!</h2>
+                        <p>Here's what's happening with your laundry orders</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon pending">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Pending Orders</h3>
+                                <p class="stat-value" id="pending-orders">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon processing">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>In Progress</h3>
+                                <p class="stat-value" id="processing-orders">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon ready">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Ready for Pickup</h3>
+                                <p class="stat-value" id="ready-orders">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon total">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Total Orders</h3>
+                                <p class="stat-value" id="total-orders">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card recent-orders">
+                            <div class="card-header">
+                                <h3>Recent Orders</h3>
+                                <button class="btn-link" data-page="my-orders">View All</button>
+                            </div>
+                            <div class="card-content">
+                                <div class="orders-list" id="recent-orders-list">
+                                    <!-- Orders will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card quick-actions">
+                            <div class="card-header">
+                                <h3>Quick Actions</h3>
+                            </div>
+                            <div class="card-content">
+                                <div class="actions-grid">
+                                    <button class="action-btn" data-page="new-order">
+                                        <i class="fas fa-plus"></i>
+                                        <span>New Order</span>
+                                    </button>
+                                    <button class="action-btn" data-page="my-orders">
+                                        <i class="fas fa-search"></i>
+                                        <span>Track Order</span>
+                                    </button>
+                                    <button class="action-btn" data-page="support">
+                                        <i class="fas fa-phone"></i>
+                                        <span>Contact Support</span>
+                                    </button>
+                                    <button class="action-btn" data-page="profile">
+                                        <i class="fas fa-user-edit"></i>
+                                        <span>Update Profile</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- New Order Page -->
+                <section id="new-order-page" class="page">
+                    <div class="page-header">
+                        <h2>Create New Order</h2>
+                        <p>Fill out the details for your laundry order</p>
+                    </div>
+
+                    <div class="order-form-container">
+                        <form id="new-order-form" class="order-form">
+                            <div class="form-section">
+                                <h3>Service Selection</h3>
+                                <div class="services-grid">
+                                    <div class="service-option" data-service="wash-fold">
+                                        <input type="checkbox" id="wash-fold" name="services" value="wash-fold">
+                                        <label for="wash-fold">
+                                            <div class="service-icon">
+                                                <i class="fas fa-tshirt"></i>
+                                            </div>
+                                            <div class="service-info">
+                                                <h4>Wash & Fold</h4>
+                                                <p>$2.50/lb</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="service-option" data-service="dry-clean">
+                                        <input type="checkbox" id="dry-clean" name="services" value="dry-clean">
+                                        <label for="dry-clean">
+                                            <div class="service-icon">
+                                                <i class="fas fa-user-tie"></i>
+                                            </div>
+                                            <div class="service-info">
+                                                <h4>Dry Cleaning</h4>
+                                                <p>$8.99/item</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="service-option" data-service="press-iron">
+                                        <input type="checkbox" id="press-iron" name="services" value="press-iron">
+                                        <label for="press-iron">
+                                            <div class="service-icon">
+                                                <i class="fas fa-iron"></i>
+                                            </div>
+                                            <div class="service-info">
+                                                <h4>Press & Iron</h4>
+                                                <p>$3.99/item</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3>Order Details</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="pickup-date">Pickup Date</label>
+                                        <input type="date" id="pickup-date" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="delivery-date">Preferred Delivery Date</label>
+                                        <input type="date" id="delivery-date" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="special-instructions">Special Instructions</label>
+                                    <textarea id="special-instructions" placeholder="Any special care instructions for your items..."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3>Pickup & Delivery</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="pickup-address">Pickup Address</label>
+                                        <textarea id="pickup-address" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="delivery-address">Delivery Address</label>
+                                        <textarea id="delivery-address" required></textarea>
+                                        <div class="form-option">
+                                            <input type="checkbox" id="same-address">
+                                            <label for="same-address">Same as pickup address</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn-secondary" id="save-draft">Save as Draft</button>
+                                <button type="submit" class="btn-primary">Submit Order</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- My Orders Page -->
+                <section id="my-orders-page" class="page">
+                    <div class="page-header">
+                        <h2>My Orders</h2>
+                        <div class="header-actions">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="order-search" placeholder="Search orders...">
+                            </div>
+                            <select id="status-filter">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="processing">Processing</option>
+                                <option value="ready">Ready</option>
+                                <option value="delivered">Delivered</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="orders-container">
+                        <div class="orders-grid" id="orders-grid">
+                            <!-- Orders will be populated here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Order History Page -->
+                <section id="order-history-page" class="page">
+                    <div class="page-header">
+                        <h2>Order History</h2>
+                        <div class="header-actions">
+                            <input type="date" id="date-from" placeholder="From">
+                            <input type="date" id="date-to" placeholder="To">
+                            <button class="btn-secondary" id="filter-history">Filter</button>
+                        </div>
+                    </div>
+
+                    <div class="history-container">
+                        <div class="history-list" id="history-list">
+                            <!-- Order history will be populated here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Profile Page -->
+                <section id="profile-page" class="page">
+                    <div class="page-header">
+                        <h2>My Profile</h2>
+                        <p>Manage your account information</p>
+                    </div>
+
+                    <div class="profile-container">
+                        <form id="profile-form" class="profile-form">
+                            <div class="form-section">
+                                <h3>Personal Information</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="profile-firstname">First Name</label>
+                                        <input type="text" id="profile-firstname" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-lastname">Last Name</label>
+                                        <input type="text" id="profile-lastname" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="profile-email">Email</label>
+                                        <input type="email" id="profile-email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-phone">Phone</label>
+                                        <input type="tel" id="profile-phone" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-address">Address</label>
+                                    <textarea id="profile-address" required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3>Preferences</h3>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="email-notifications">
+                                        <span>Email notifications for order updates</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="sms-notifications">
+                                        <span>SMS notifications for order updates</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Update Profile</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Support Page -->
+                <section id="support-page" class="page">
+                    <div class="page-header">
+                        <h2>Customer Support</h2>
+                        <p>We're here to help you with any questions or concerns</p>
+                    </div>
+
+                    <div class="support-container">
+                        <div class="support-grid">
+                            <div class="support-card">
+                                <div class="support-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <h3>Call Us</h3>
+                                <p>+233 558 535 919</p>
+                                <p class="support-hours">Mon-Fri: 7AM-8PM<br>Sat-Sun: 8AM-6PM</p>
+                            </div>
+                            <div class="support-card">
+                                <div class="support-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <h3>Email Us</h3>
+                                <p>support@laundrypro.com</p>
+                                <p class="support-hours">We'll respond within 24 hours</p>
+                            </div>
+                            <div class="support-card">
+                                <div class="support-icon">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <h3>Live Chat</h3>
+                                <p>Chat with our support team</p>
+                                <button class="btn-primary" id="start-chat">Start Chat</button>
+                            </div>
+                        </div>
+
+                        <div class="faq-section">
+                            <h3>Frequently Asked Questions</h3>
+                            <div class="faq-list">
+                                <div class="faq-item">
+                                    <div class="faq-question">
+                                        <h4>How long does it take to process my order?</h4>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>Most orders are completed within 24-48 hours. Dry cleaning may take 2-3 business days.</p>
+                                    </div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question">
+                                        <h4>Can I track my order status?</h4>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>Yes! You can track your order status in real-time from your dashboard or the "My Orders" section.</p>
+                                    </div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question">
+                                        <h4>What if I'm not satisfied with the service?</h4>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>We offer a 100% satisfaction guarantee. Contact us within 24 hours of delivery and we'll make it right.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/user-dashboard.js"></script>
+</body>
+</html>

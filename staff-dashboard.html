@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard - LaundryPro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/staff-dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <i class="fas fa-tshirt"></i>
+                    <span>LaundryPro</span>
+                </div>
+                <p>Staff Portal</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active" data-page="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </li>
+                    <li class="nav-item" data-page="orders">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Manage Orders</span>
+                    </li>
+                    <li class="nav-item" data-page="customers">
+                        <i class="fas fa-users"></i>
+                        <span>Customers</span>
+                    </li>
+                    <li class="nav-item" data-page="schedule">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Schedule</span>
+                    </li>
+                    <li class="nav-item" data-page="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Reports</span>
+                    </li>
+                    <li class="nav-item" data-page="profile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="page-title">Staff Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notification-count">0</span>
+                    </div>
+                    <div class="user-menu">
+                        <img src="assets/41.png" alt="User Avatar" class="avatar">
+                        <div class="user-info">
+                            <span class="user-name" id="user-name">Staff Member</span>
+                            <span class="user-role">Staff</span>
+                        </div>
+                        <div class="dropdown">
+                            <button class="dropdown-toggle">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="#" data-page="profile">Profile</a>
+                                <a href="#" id="logout-btn">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <section id="dashboard-page" class="page active">
+                    <div class="welcome-section">
+                        <h2>Welcome, <span id="welcome-name">Staff Member</span>!</h2>
+                        <p>Manage orders and provide excellent customer service</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon pending">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Pending Orders</h3>
+                                <p class="stat-value" id="pending-orders">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon processing">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>In Progress</h3>
+                                <p class="stat-value" id="processing-orders">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon ready">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Ready for Pickup</h3>
+                                <p class="stat-value" id="ready-orders">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon completed">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Completed Today</h3>
+                                <p class="stat-value" id="completed-orders">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card urgent-orders">
+                            <div class="card-header">
+                                <h3>Urgent Orders</h3>
+                                <button class="btn-link" data-page="orders">View All</button>
+                            </div>
+                            <div class="card-content">
+                                <div class="orders-list" id="urgent-orders-list">
+                                    <!-- Urgent orders will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card today-schedule">
+                            <div class="card-header">
+                                <h3>Today's Schedule</h3>
+                                <button class="btn-link" data-page="schedule">View Full</button>
+                            </div>
+                            <div class="card-content">
+                                <div class="schedule-list" id="today-schedule-list">
+                                    <!-- Today's schedule will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Orders Management Page -->
+                <section id="orders-page" class="page">
+                    <div class="page-header">
+                        <h2>Order Management</h2>
+                        <div class="header-actions">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="order-search" placeholder="Search orders...">
+                            </div>
+                            <select id="status-filter">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="processing">Processing</option>
+                                <option value="ready">Ready</option>
+                                <option value="delivered">Delivered</option>
+                            </select>
+                            <select id="priority-filter">
+                                <option value="all">All Priority</option>
+                                <option value="urgent">Urgent</option>
+                                <option value="normal">Normal</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="orders-container">
+                        <div class="orders-table-container">
+                            <table class="orders-table" id="orders-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Services</th>
+                                        <th>Pickup Date</th>
+                                        <th>Delivery Date</th>
+                                        <th>Status</th>
+                                        <th>Priority</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orders-table-body">
+                                    <!-- Orders will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Customers Page -->
+                <section id="customers-page" class="page">
+                    <div class="page-header">
+                        <h2>Customer Management</h2>
+                        <div class="header-actions">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="customer-search" placeholder="Search customers...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="customers-container">
+                        <div class="customers-grid" id="customers-grid">
+                            <!-- Customers will be populated here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Schedule Page -->
+                <section id="schedule-page" class="page">
+                    <div class="page-header">
+                        <h2>Schedule Management</h2>
+                        <div class="header-actions">
+                            <input type="date" id="schedule-date" value="">
+                            <button class="btn-secondary" id="today-btn">Today</button>
+                        </div>
+                    </div>
+
+                    <div class="schedule-container">
+                        <div class="schedule-grid">
+                            <div class="schedule-section">
+                                <h3>Pickups</h3>
+                                <div class="schedule-items" id="pickups-list">
+                                    <!-- Pickup schedule will be populated here -->
+                                </div>
+                            </div>
+                            <div class="schedule-section">
+                                <h3>Deliveries</h3>
+                                <div class="schedule-items" id="deliveries-list">
+                                    <!-- Delivery schedule will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Reports Page -->
+                <section id="reports-page" class="page">
+                    <div class="page-header">
+                        <h2>Reports & Analytics</h2>
+                        <div class="header-actions">
+                            <select id="report-period">
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                            <button class="btn-secondary" id="generate-report">Generate Report</button>
+                        </div>
+                    </div>
+
+                    <div class="reports-container">
+                        <div class="report-stats">
+                            <div class="report-card">
+                                <h3>Total Orders</h3>
+                                <p class="report-value" id="report-total-orders">0</p>
+                            </div>
+                            <div class="report-card">
+                                <h3>Revenue</h3>
+                                <p class="report-value" id="report-revenue">$0.00</p>
+                            </div>
+                            <div class="report-card">
+                                <h3>Completion Rate</h3>
+                                <p class="report-value" id="report-completion-rate">0%</p>
+                            </div>
+                            <div class="report-card">
+                                <h3>Customer Satisfaction</h3>
+                                <p class="report-value" id="report-satisfaction">0%</p>
+                            </div>
+                        </div>
+
+                        <div class="report-charts">
+                            <div class="chart-container">
+                                <h3>Order Status Distribution</h3>
+                                <div class="chart" id="status-chart">
+                                    <!-- Chart will be rendered here -->
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Service Type Breakdown</h3>
+                                <div class="chart" id="service-chart">
+                                    <!-- Chart will be rendered here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Profile Page -->
+                <section id="profile-page" class="page">
+                    <div class="page-header">
+                        <h2>Staff Profile</h2>
+                        <p>Manage your staff account information</p>
+                    </div>
+
+                    <div class="profile-container">
+                        <form id="profile-form" class="profile-form">
+                            <div class="form-section">
+                                <h3>Personal Information</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="profile-firstname">First Name</label>
+                                        <input type="text" id="profile-firstname" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-lastname">Last Name</label>
+                                        <input type="text" id="profile-lastname" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="profile-email">Email</label>
+                                        <input type="email" id="profile-email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-phone">Phone</label>
+                                        <input type="tel" id="profile-phone" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-employee-id">Employee ID</label>
+                                    <input type="text" id="profile-employee-id" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3>Work Information</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="profile-department">Department</label>
+                                        <select id="profile-department">
+                                            <option value="processing">Processing</option>
+                                            <option value="quality-control">Quality Control</option>
+                                            <option value="customer-service">Customer Service</option>
+                                            <option value="delivery">Delivery</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-shift">Shift</label>
+                                        <select id="profile-shift">
+                                            <option value="morning">Morning (7AM - 3PM)</option>
+                                            <option value="afternoon">Afternoon (3PM - 11PM)</option>
+                                            <option value="night">Night (11PM - 7AM)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Update Profile</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Order Status Modal -->
+    <div class="modal" id="status-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Update Order Status</h3>
+                <button class="close-modal" id="close-status-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="status-form">
+                    <div class="form-group">
+                        <label for="order-id-display">Order ID</label>
+                        <input type="text" id="order-id-display" readonly>
+                        <input type="hidden" id="order-id-hidden">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-status">New Status</label>
+                        <select id="new-status" required>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="ready">Ready for Pickup</option>
+                            <option value="delivered">Delivered</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status-notes">Notes (Optional)</label>
+                        <textarea id="status-notes" placeholder="Add any notes about this status update..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="cancel-status">Cancel</button>
+                <button type="button" class="btn-primary" id="update-status">Update Status</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/staff-dashboard.js"></script>
+</body>
+</html>
